@@ -90,5 +90,16 @@ services:
       rabbitmq:
         condition: service_healthy
 
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        BACKEND_URL: http://web:8000
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    depends_on:
+      - web
+
 volumes:
   postgres_data:
